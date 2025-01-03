@@ -1,9 +1,30 @@
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Star } from "lucide-react"
+"use client";
 
-export default function ProductDetail() {
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Star } from "lucide-react";
+import { featuredProducts } from "../list-products";
+import { useState } from "react";
+
+interface PageParams {
+  productId: string;
+}
+
+export default function ProductDetail({ params }: { params: PageParams }) {
+  // const router = useRouter();
+  const { productId } = params;
+  const product = featuredProducts.find((p) => p.id === Number(productId));
+  const [quantity, setQuantity] = useState(1);
+
+  const handleQuantityChange = (change: number) => {
+    setQuantity((prev) => Math.max(1, prev + change));
+  };
+
+  if (!productId) {
+    // router.push('/dashboard/team-members');
+    return null;
+  }
   return (
     <div className="min-h-screen  p-8">
       <div className="max-w-6xl mx-auto">
@@ -12,14 +33,12 @@ export default function ProductDetail() {
           <div className="relative">
             <Card className="bg-zinc-900 border-none overflow-hidden">
               <img
-                src="https://isteam.wsimg.com/ip/17cbe4e3-7872-4879-b3f1-85c6fa07f6b1/ols/46_original/:/rs=w:600,h:600"
+                src={product?.image}
                 alt="Shooting Target"
                 className="w-full h-full object-cover"
               />
-              <Badge 
-                className="absolute top-4 right-4 bg-orange-500 text-white"
-              >
-                BESTSELLER
+              <Badge className="absolute top-4 right-4 bg-orange-500 text-white">
+                {product?.ranking}
               </Badge>
             </Card>
           </div>
@@ -27,13 +46,19 @@ export default function ProductDetail() {
           {/* Product Details Section */}
           <div className="space-y-6">
             <div>
-              <h1 className="text-4xl font-bold mb-2">Shooting Target (Double)</h1>
+              <h1 className="text-4xl font-bold mb-2">{product?.title}</h1>
               <div className="flex items-center space-x-2">
                 <div className="flex">
                   {[...Array(4)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-orange-500 text-orange-500" />
+                    <Star
+                      key={i}
+                      className="w-5 h-5 fill-orange-500 text-orange-500"
+                    />
                   ))}
-                  <Star className="w-5 h-5 fill-orange-500 text-orange-500" style={{ clipPath: 'inset(0 50% 0 0)' }} />
+                  <Star
+                    className="w-5 h-5 fill-orange-500 text-orange-500"
+                    style={{ clipPath: "inset(0 50% 0 0)" }}
+                  />
                 </div>
                 <span className="text-gray-400">(4.5)</span>
               </div>
@@ -41,15 +66,13 @@ export default function ProductDetail() {
 
             <div className="border-t border-zinc-800 pt-6">
               <div className="text-3xl font-bold text-orange-500">
-                ${125.00}
+                ${product?.price.sale_price}
               </div>
             </div>
 
             <div className="border-t border-zinc-800 pt-6">
               <h2 className="text-xl font-semibold mb-3">Product Details</h2>
-              <p className="text-gray-400">
-                Double AR 400 shooting targets, 3/8" thick. Fun target stands for the ranch.
-              </p>
+              <p className="text-gray-400">{product?.details}</p>
             </div>
 
             <div className="border-t border-zinc-800 pt-6">
@@ -62,11 +85,38 @@ export default function ProductDetail() {
               </ul>
             </div>
 
+
+            <div className="border-t border-zinc-800 pt-6">
+              <h2 className="text-xl font-semibold mb-3">Quantity</h2>
+              <div className="flex items-center space-x-4">
+                <Button 
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"
+                  onClick={() => handleQuantityChange(-1)}
+                >
+                  <span className="text-lg">-</span>
+                </Button>
+                <span className="text-lg font-medium w-12 text-center">{quantity}</span>
+                <Button
+                  variant="outline" 
+                  size="icon"
+                  className="h-8 w-8 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"
+                  onClick={() => handleQuantityChange(1)}
+                >
+                  <span className="text-lg">+</span>
+                </Button>
+              </div>
+            </div>
+
             <div className="space-y-4 pt-6">
               <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white">
                 Add to Cart
               </Button>
-              <Button variant="outline" className="w-full border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white">
+              <Button
+                variant="outline"
+                className="w-full border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"
+              >
                 Buy Now
               </Button>
             </div>
@@ -74,5 +124,5 @@ export default function ProductDetail() {
         </div>
       </div>
     </div>
-  )
+  );
 }

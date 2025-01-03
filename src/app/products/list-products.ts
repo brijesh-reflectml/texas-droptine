@@ -19,7 +19,7 @@ export const featuredProducts = [
       title: "Shooting Target (Double)",
       price: {
         display: "125.00",
-        sale_price: "0.00",
+        sale_price: "99.99",
       },
       details:
         'Double AR 400 shooting targets, 3/8" thick. Fun target stands for the ranch.',
@@ -33,7 +33,7 @@ export const featuredProducts = [
       title: "ExT 4x6 Deer Blind (made by Bigfoot Outdoors)",
       price: {
         display: "1,049.00",
-        sale_price: "0.00",
+        sale_price: "999.99",
       },
       details:
         "The ExT 4x6 gets its name because we built them Extra Tall at 6'6\" tall as a standard option. No more hitting your head and having to bend over while you stretch your back in the stand.",
@@ -74,7 +74,7 @@ export const featuredProducts = [
       title: "TRIPOD BOW STAND (6, 8')",
       price: {
         display: "259.99",
-        sale_price: "0.00",
+        sale_price: "219.99",
       },
       details: "A sturdy stand for bow hunting.",
       ranking: "bestseller",

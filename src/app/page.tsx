@@ -72,7 +72,7 @@ export default function Home() {
                 <div className="flex justify-between items-center mb-4">
                   <Card className="inline-flex items-center px-2.5 py-2.5">
                     <span className="text-sm font-medium text-gray-700">
-                      ★ 4/5
+                      ★ {product.rating}/5
                     </span>
                   </Card>
                   <Button
